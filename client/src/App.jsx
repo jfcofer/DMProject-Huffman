@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/header";
+import Header from "./components/Header/Header";
+import Compression from "./pages/Compression";
+import Decompression from "./pages/Decompression";
 import Home from "./pages/Home";
-import About from "./pages/About";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <main className="container mx-auto">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/decompress" element={<Decompression />} />
+          <Route path="/compress" element={<Compression />} />
         </Routes>
       </main>
     </Router>
