@@ -1,12 +1,13 @@
 import { useState } from "react";
-import ImagePicker from "./components/ImagePicker";
 import CompressButton from "./components/CompressButton";
 import DownloadButton from "./components/DownloadButton";
+import ImagePicker from "./components/ImagePicker";
+import RestartButton from "./components/RestartButton";
 import { useFileCompression } from "./hooks/useFileCompression";
 
 function Compression() {
   const [selectedFile, setSelectedFile] = useState(null);
-  const { compressFile, downloadUrl } = useFileCompression();
+  const { compressFile, downloadUrl, setDownloadUrl } = useFileCompression();
 
   const handleFileSelect = (file) => {
     setSelectedFile(file);
@@ -18,16 +19,24 @@ function Compression() {
       return;
     }
     compressFile(selectedFile);
+  };
+
+  const handleRestart = () => {
     setSelectedFile(null);
+    setDownloadUrl("");
   };
 
   return (
-    <div className="flex flex-col gap-7 p-6 mt-2">
-      <ImagePicker onFileSelect={handleFileSelect} />
-      <div className="flex flex-row justify-evenly">
+    <div className="mt-2 flex flex-col items-center gap-7 p-6">
+      <ImagePicker
+        selectedFile={selectedFile}
+        onFileSelect={handleFileSelect}
+      />
+      <div className="flex w-full flex-row justify-evenly">
         <CompressButton disabled={!selectedFile} onClick={handleCompress} />
-        <DownloadButton downloadUrl={downloadUrl} />
+        <DownloadButton selectedFile={selectedFile} downloadUrl={downloadUrl} />
       </div>
+      {selectedFile && <RestartButton onRestart={handleRestart} />}
     </div>
   );
 }

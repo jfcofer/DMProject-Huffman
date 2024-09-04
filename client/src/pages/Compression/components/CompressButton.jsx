@@ -7,7 +7,7 @@ export default function CompressButton({ disabled, onClick }) {
     <button
       disabled={disabled}
       onClick={onClick}
-      className="flex h-20 w-2/5 transform cursor-pointer flex-row items-center justify-center gap-5 rounded-2xl bg-gray-800 text-gray-100 transition-all duration-300 hover:scale-105 disabled:pointer-events-none disabled:transform-none disabled:bg-gray-600"
+      className="flex h-20 w-2/5 transform cursor-pointer flex-row items-center justify-center gap-5 rounded-2xl bg-cyan-800 text-gray-100 transition-all duration-300 hover:scale-105 disabled:pointer-events-none disabled:transform-none disabled:bg-gray-600"
     >
       <FontAwesomeIcon icon={faUpload} size="2x" />
       <span className="text-xl font-bold">Comprimir Imagen</span>

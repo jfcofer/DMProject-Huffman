@@ -1,28 +1,29 @@
 import axios from "axios";
 import { useState } from "react";
 
-export const useFileCompression = () => {
+export const useFileDecompression = () => {
   const [downloadUrl, setDownloadUrl] = useState("");
 
-  const compressFile = async (selectedFile) => {
+  const decompressFile = async (selectedFile, format) => {
     const formData = new FormData();
     formData.append("file", selectedFile);
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/v1/image/compress",
+        `http://localhost:8000/v1/image/decompress/${format}`,
         formData,
         {
-          responseType: "blob",
+          responseType: "blob", // Expecting a blob as a response (the decompressed image)
         },
       );
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       setDownloadUrl(url);
     } catch (error) {
-      console.error("Error uploading the file", error);
-      alert("Failed to compress the image");
+      console.error("Error decompressing the file", error);
+      alert("Failed to decompress the image");
     }
   };
 
-  return { compressFile, downloadUrl , setDownloadUrl};
+  return { decompressFile, downloadUrl, setDownloadUrl };
 };

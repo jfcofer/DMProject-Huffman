@@ -2,7 +2,7 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 
-export default function ImagePicker({ selectedFile, onFileSelect }) {
+export default function FilePicker({ selectedFile, onFileSelect }) {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -22,13 +22,13 @@ export default function ImagePicker({ selectedFile, onFileSelect }) {
       <input
         id="file-upload"
         type="file"
-        accept="image/*"
+        accept="*.huff"
         onChange={handleFileChange}
         className="hidden"
       />
       <FontAwesomeIcon icon={faImage} size="4x" />
       {!selectedFile ? (
-        <h3 className="text-2xl">Escoge una Imagen para Comprimir</h3>
+        <h3 className="text-2xl">Escoge un Archivo Huffman para Descomprimir</h3>
       ) : (
         <h3 className="text-xl">Archivo {selectedFile.name} seleccionado</h3>
       )}
@@ -36,7 +36,7 @@ export default function ImagePicker({ selectedFile, onFileSelect }) {
   );
 }
 
-ImagePicker.propTypes = {
+FilePicker.propTypes = {
   selectedFile: PropTypes.object,
   onFileSelect: PropTypes.func,
 };
