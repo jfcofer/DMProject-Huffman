@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
-import Compression from "./pages/Compression";
+import Compression from "./pages/Compression/Compression";
 import Decompression from "./pages/Decompression";
 import Home from "./pages/Home";
 
