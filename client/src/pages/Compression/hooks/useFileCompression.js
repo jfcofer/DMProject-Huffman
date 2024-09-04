@@ -24,5 +24,5 @@ export const useFileCompression = () => {
     }
   };
 
-  return { compressFile, downloadUrl , setDownloadUrl};
+  return { compressFile, downloadUrl, setDownloadUrl };
 };

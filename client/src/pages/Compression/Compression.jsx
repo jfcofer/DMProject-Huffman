@@ -32,7 +32,7 @@ function Compression() {
         selectedFile={selectedFile}
         onFileSelect={handleFileSelect}
       />
-      <div className="flex w-full flex-row justify-evenly">
+      <div className="flex w-full flex-col items-center justify-evenly gap-5 md:flex-row">
         <CompressButton disabled={!selectedFile} onClick={handleCompress} />
         <DownloadButton selectedFile={selectedFile} downloadUrl={downloadUrl} />
       </div>

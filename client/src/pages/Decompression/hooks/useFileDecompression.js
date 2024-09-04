@@ -9,6 +9,7 @@ export const useFileDecompression = () => {
     formData.append("file", selectedFile);
 
     try {
+      console.log(format);
       const response = await axios.post(
         `http://localhost:8000/v1/image/decompress/${format}`,
         formData,

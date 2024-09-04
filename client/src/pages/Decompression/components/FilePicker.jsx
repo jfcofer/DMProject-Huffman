@@ -1,4 +1,4 @@
-import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { faFile } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 
@@ -13,7 +13,7 @@ export default function FilePicker({ selectedFile, onFileSelect }) {
   return (
     <label
       htmlFor="file-upload"
-      className={`flex h-52 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl bg-gray-300 transition-all duration-300 ${
+      className={`flex h-52 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl bg-gray-300 p-8 transition-all duration-300 ${
         selectedFile
           ? "pointer-events-none"
           : "hover:scale-105 hover:bg-gray-400"
@@ -22,15 +22,19 @@ export default function FilePicker({ selectedFile, onFileSelect }) {
       <input
         id="file-upload"
         type="file"
-        accept="*.huff"
+        accept=".huff"
         onChange={handleFileChange}
         className="hidden"
       />
-      <FontAwesomeIcon icon={faImage} size="4x" />
+      <FontAwesomeIcon icon={faFile} size="4x" />
       {!selectedFile ? (
-        <h3 className="text-2xl">Escoge un Archivo Huffman para Descomprimir</h3>
+        <h3 className="text-center text-xl md:text-2xl">
+          Escoge un Archivo (.huff) para Descomprimir
+        </h3>
       ) : (
-        <h3 className="text-xl">Archivo {selectedFile.name} seleccionado</h3>
+        <h3 className="text-center text-xl md:text-2xl">
+          Archivo {selectedFile.name} seleccionado
+        </h3>
       )}
     </label>
   );

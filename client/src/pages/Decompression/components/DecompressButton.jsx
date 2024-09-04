@@ -2,7 +2,7 @@ import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 
-export default function CompressButton({ disabled, onClick }) {
+export default function DecompressButton({ disabled, onClick }) {
   return (
     <button
       disabled={disabled}
@@ -11,13 +11,13 @@ export default function CompressButton({ disabled, onClick }) {
     >
       <FontAwesomeIcon icon={faUpload} size="2x" />
       <span className="text-center text-lg font-bold md:text-xl">
-        Comprimir Imagen
+        Descomprimir Imagen
       </span>
     </button>
   );
 }
 
-CompressButton.propTypes = {
+DecompressButton.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
 };
