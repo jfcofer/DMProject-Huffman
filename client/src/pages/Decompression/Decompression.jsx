@@ -6,11 +6,12 @@ import FilePicker from "./components/FilePicker";
 import FormatSelector from "./components/FormatSelector";
 import RestartButton from "./components/RestartButton";
 import { useFileDecompression } from "./hooks/useFileDecompression";
+import Spinner from "../../components/Spinner";
 
 function Decompression() {
   const [selectedFormat, setSelectedFormat] = useState(SupportedFormats.PNG);
   const [selectedFile, setSelectedFile] = useState(null);
-  const { decompressFile, downloadUrl, setDownloadUrl } =
+  const { decompressFile, downloadUrl, setDownloadUrl ,loading} =
     useFileDecompression();
 
   const handleFileSelect = (file) => {
@@ -48,6 +49,7 @@ function Decompression() {
           onSelectFormat={handleFormatChange}
         />
       </div>
+      {loading && <Spinner/>}
       <div className="flex w-full flex-col items-center justify-evenly gap-5 md:flex-row">
         <DecompressButton disabled={!selectedFile} onClick={handleDecompress} />
         <DownloadButton

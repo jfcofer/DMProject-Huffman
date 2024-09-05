@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Spinner from "../../components/Spinner";
 import CompressButton from "./components/CompressButton";
 import DownloadButton from "./components/DownloadButton";
 import ImagePicker from "./components/ImagePicker";
@@ -7,7 +8,8 @@ import { useFileCompression } from "./hooks/useFileCompression";
 
 function Compression() {
   const [selectedFile, setSelectedFile] = useState(null);
-  const { compressFile, downloadUrl, setDownloadUrl } = useFileCompression();
+  const { compressFile, downloadUrl, setDownloadUrl, loading } =
+    useFileCompression();
 
   const handleFileSelect = (file) => {
     setSelectedFile(file);
@@ -32,6 +34,7 @@ function Compression() {
         selectedFile={selectedFile}
         onFileSelect={handleFileSelect}
       />
+      {loading && <Spinner />}
       <div className="flex w-full flex-col items-center justify-evenly gap-5 md:flex-row">
         <CompressButton disabled={!selectedFile} onClick={handleCompress} />
         <DownloadButton selectedFile={selectedFile} downloadUrl={downloadUrl} />
