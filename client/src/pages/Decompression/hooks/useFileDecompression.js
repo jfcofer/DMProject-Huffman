@@ -3,6 +3,7 @@ import { useState } from "react";
 import delay from "../../../utils/delay";
 
 export const useFileDecompression = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [loading, setLoading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
 
@@ -12,9 +13,8 @@ export const useFileDecompression = () => {
     formData.append("file", selectedFile);
 
     try {
-      console.log(format);
       const response = await axios.post(
-        `https://dmproject-huffman.onrender.com/v1/image/decompress/${format}`,
+        `${apiUrl}/v1/image/decompress/${format}`,
         formData,
         {
           responseType: "blob", // Expecting a blob as a response (the decompressed image)

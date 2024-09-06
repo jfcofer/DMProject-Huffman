@@ -3,6 +3,7 @@ import { useState } from "react";
 import delay from "../../../utils/delay";
 
 export const useFileCompression = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [downloadUrl, setDownloadUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const compressFile = async (selectedFile) => {
@@ -12,7 +13,7 @@ export const useFileCompression = () => {
 
     try {
       const response = await axios.post(
-        "https://dmproject-huffman.onrender.com/v1/image/compress",
+        `${apiUrl}/v1/image/compress`,
         formData,
         {
           responseType: "blob",

@@ -6,6 +6,7 @@ from models.supported_format import SupportedDownloadFormat, SupportedUploadForm
 from PIL import Image
 from services.compression_service import CompressionService
 from services.decompression_service import DecompressionService
+from starlette.concurrency import run_in_threadpool
 
 ImageRouter = APIRouter(prefix="/v1/image", tags=["images"])
 
@@ -20,10 +21,20 @@ async def compress_image(
             detail="Unsupported file format. Please upload a PNG or JPEG image.",
         )
 
-    image = Image.open(io.BytesIO(await file.read()))
-    compressed_file = compression_service.compress_image(image)
+    file_content = io.BytesIO()
+    while chunk := await file.read(1024):
+        file_content.write(chunk)
+    file_content.seek(0)
+
+    image = await run_in_threadpool(Image.open, file_content)
+    compressed_file = await run_in_threadpool(compression_service.compress_image, image)
+
+    def file_chunker(file_obj):
+        while chunk := file_obj.read(1024 * 1024):
+            yield chunk
+
     return StreamingResponse(
-        compressed_file,
+        file_chunker(compressed_file),
         media_type="application/octet-stream",
         headers={
             "Content-Disposition": f"attachment; filename={file.filename.split('.')[0]}.huff"
@@ -37,10 +48,19 @@ async def decompress_image(
     file: UploadFile,
     decompression_service: DecompressionService = Depends(),
 ):
-    compressed_file = io.BytesIO(await file.read())
-    decompressed_file = decompression_service.decompress_image(compressed_file, format)
+    file_content = io.BytesIO()
+    while chunk := await file.read(1024):
+        file_content.write(chunk)
+    file_content.seek(0)
+
+    decompressed_file = decompression_service.decompress_image(file_content, format)
+
+    def file_chunker(file_obj):
+        while chunk := file_obj.read(1024 * 1024):
+            yield chunk
+
     return StreamingResponse(
-        decompressed_file,
+        file_chunker(decompressed_file),
         media_type="image",
         headers={
             "Content-Disposition": f"attachment; filename={file.filename.split('.')[0]}.{format.value}"

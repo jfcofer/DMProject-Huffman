@@ -66,7 +66,6 @@ class DecompressionService:
         g_decoding_dict = self.rebuild_huffman_tree(g_tree)
         b_decoding_dict = self.rebuild_huffman_tree(b_tree)
 
-        # Extract and decode each color channel's data
         r_encoded_data = encoded_data[:r_length]
         g_encoded_data = encoded_data[r_length : r_length + g_length]
         b_encoded_data = encoded_data[r_length + g_length :]

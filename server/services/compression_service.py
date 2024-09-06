@@ -30,15 +30,12 @@ class CompressionService:
             heapq.heappush(heap, [lo[0] + hi[0]] + lo[1:] + hi[1:])
         return sorted(heapq.heappop(heap)[1:], key=lambda p: (len(p[-1]), p))
 
-    # Step 4: Generate Huffman Codes
     def huffman_encoding(self, tree):
         return {symbol: code for symbol, code in tree}
 
-    # Step 5: Encode the Image
     def encode_channel(self, channel_data, huffman_codes):
         return "".join([huffman_codes[pixel] for pixel in channel_data])
 
-    # Step 6: Compress Image using Huffman Coding
     def compress_image(self, image: Image.Image) -> io.BytesIO:
         r_data, g_data, b_data, image_size = self.get_rgb_data(image)
 
@@ -62,7 +59,6 @@ class CompressionService:
         output.write(f"{image_size[0]} {image_size[1]}\n".encode())
         output.write(f"{len(r_encoded)} {len(g_encoded)} {len(b_encoded)}\n".encode())
 
-        # Save Huffman trees
         for tree, color in zip(
             [r_huffman_tree, g_huffman_tree, b_huffman_tree], ["R", "G", "B"]
         ):
@@ -70,7 +66,6 @@ class CompressionService:
             for symbol, code in tree:
                 output.write(f"{symbol}:{code}\n".encode())
 
-        # Save encoded data
         output.write(r_encoded.encode())
         output.write(g_encoded.encode())
         output.write(b_encoded.encode())
